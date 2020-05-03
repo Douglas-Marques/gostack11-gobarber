@@ -1,7 +1,7 @@
 <img alt="GoStack" src="https://storage.googleapis.com/golden-wind/bootcamp-gostack/header-desafios.png" />
 
 <h3 align="center">
-  Desafio: Fundamentos de Node.js e Typescript do Bootcamp GoStack v11 da Rocketseat
+  GoBarber: Aplicação construída durante o bootcamp.
 </h3>
 
 <p align="center">

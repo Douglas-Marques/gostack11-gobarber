@@ -1,7 +1,7 @@
 <img alt="GoStack" src="https://storage.googleapis.com/golden-wind/bootcamp-gostack/header-desafios.png" />
 
 <h3 align="center">
-  GoBarber: Aplicação Omnistack construída durante o bootcamp.
+  GoBarber: Aplicação Omnistack<NodeJS, ReactJS and React Native> construída durante o bootcamp GoStack v11 da Rocketseat.
 </h3>
 
 <p align="center">

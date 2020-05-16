@@ -4,6 +4,8 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
+
+import { useAuth } from '../../context/AuthContext';
 import getValidationsErrors from '../../utils/getValidationsErrors';
 
 import Input from '../../components/Input';
@@ -13,26 +15,36 @@ import { Container, Content, Background } from './styles';
 
 const logo = require('../../assets/logo.svg') as string;
 
+interface SignInForm {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const { signIn } = useAuth();
 
-  const handleSubmit = useCallback(async (data: Record<string, any>) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('Email obrigatório!')
-          .email('Digite um e-mail válido!'),
-        password: Yup.string().required('Senha obrigatória!'),
-      });
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (e) {
-      const errors = getValidationsErrors(e);
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: SignInForm) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Email obrigatório!')
+            .email('Digite um e-mail válido!'),
+          password: Yup.string().required('Senha obrigatória!'),
+        });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        signIn({ email: data.email, password: data.password });
+      } catch (e) {
+        const errors = getValidationsErrors(e);
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [signIn],
+  );
 
   return (
     <>

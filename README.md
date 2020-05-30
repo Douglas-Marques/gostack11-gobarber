@@ -24,4 +24,4 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-Feito com 💜 by douglasDGmarques :wave: [Me segue no Twitter!](https://twitter.com/DouglazMarquez)
+Feito com 💜 by douglasDGmarques :wave: [Me segue no Twitter!](https://twitter.com/douglasDGmrx)

@@ -19,6 +19,9 @@ export default class AppointmentsController {
       provider_id,
     });
 
+    delete appointment.id;
+    delete appointment.provider_id;
+
     return res.json(appointment);
   }
 }

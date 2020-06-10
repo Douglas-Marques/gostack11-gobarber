@@ -3,13 +3,18 @@ import CreateAppointmentService from '@modules/appointments/services/CreateAppoi
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import AppError from '@shared/errors/AppError';
 
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let createAppointmentService: CreateAppointmentService;
+
 describe('CreateAppointment', () => {
-  it('should be able to create a new appointment', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointmentService = new CreateAppointmentService(
+  beforeEach(() => {
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    createAppointmentService = new CreateAppointmentService(
       fakeAppointmentsRepository,
     );
+  });
 
+  it('should be able to create a new appointment', async () => {
     const appointment: Appointment = await createAppointmentService.execute({
       date: new Date(),
       provider_id: '123',
@@ -20,11 +25,6 @@ describe('CreateAppointment', () => {
   });
 
   it('should not be able to create two appointments on the same time', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointmentService = new CreateAppointmentService(
-      fakeAppointmentsRepository,
-    );
-
     const sameDate = new Date(2020, 4, 30, 15);
 
     await createAppointmentService.execute({
@@ -32,7 +32,7 @@ describe('CreateAppointment', () => {
       provider_id: '123',
     });
 
-    expect(
+    await expect(
       createAppointmentService.execute({
         date: sameDate,
         provider_id: '123',

@@ -9,6 +9,11 @@ import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 class UsersRepository implements IUserRepository {
   private users: User[] = [];
 
+  public async findAllProviders(id: string): Promise<User[]> {
+    if (id) return this.users.filter((user) => user.id !== id);
+    else return this.users;
+  }
+
   public async findById(id: string): Promise<User | undefined> {
     const findUser = this.users.find((user) => user.id === id);
     return findUser;

@@ -44,6 +44,7 @@ class ListProviderDayAvailabilityService {
     );
 
     const currentDate = new Date(Date.now());
+
     const availability = eachHourOfDay.map((hour) => {
       const hasAppointmentInHour = appointments.find(
         (appointment) => getHours(appointment.date) === hour,

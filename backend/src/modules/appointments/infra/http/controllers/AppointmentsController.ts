@@ -21,10 +21,6 @@ export default class AppointmentsController {
       user_id,
     });
 
-    // delete appointment.id;
-    // delete appointment.provider_id;
-    // delete appointment.user_id;
-
     return res.json(appointment);
   }
 }

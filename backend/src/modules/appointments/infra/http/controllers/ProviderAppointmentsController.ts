@@ -19,10 +19,6 @@ export default class ProviderAppointmentsController {
       year,
     });
 
-    // delete appointment.id;
-    // delete appointment.provider_id;
-    // delete appointment.user_id;
-
     return res.json(appointments);
   }
 }

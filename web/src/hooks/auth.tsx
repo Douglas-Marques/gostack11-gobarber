@@ -30,7 +30,13 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<UserData>(() => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
-    if (token && user) return { token, user: JSON.parse(user) };
+
+    if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
+      return { token, user: JSON.parse(user) };
+    }
+
     return {} as UserData;
   });
 
@@ -40,14 +46,19 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
     const { token, user } = response.data;
+
     localStorage.setItem('@GoBarber:token', token);
     localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
     setData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@GoBarber:token');
     localStorage.removeItem('@GoBarber:user');
+
     setData({} as UserData);
   }, []);
 
@@ -60,6 +71,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 export function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
+
   if (!context) throw new Error('useAuth must be used within an AuthProvider!');
   else return context;
 }

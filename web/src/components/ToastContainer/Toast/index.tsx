@@ -42,7 +42,7 @@ const ToastControler: React.FC<Message> = ({ toast, style }) => {
     <Container
       key={toast.id}
       type={toast.type}
-      hasDescription={Number(!!toast.description)}
+      hasdescription={Number(!!toast.description)}
       style={style}
     >
       {icons[toast.type || 'info']}

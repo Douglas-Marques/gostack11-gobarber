@@ -4,7 +4,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
@@ -28,20 +28,27 @@ const SignIn: React.FC = () => {
   const { signIn } = useAuth();
   const { addToast } = useToast();
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
     async (data: SignInForm) => {
       try {
         formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           email: Yup.string()
             .required('Email obrigatório!')
             .email('Digite um e-mail válido!'),
           password: Yup.string().required('Senha obrigatória!'),
         });
+
         await schema.validate(data, {
           abortEarly: false,
         });
+
         await signIn({ email: data.email, password: data.password });
+
+        history.push('/dashboard');
       } catch (e) {
         if (e instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(e);
@@ -54,7 +61,7 @@ const SignIn: React.FC = () => {
           });
       }
     },
-    [signIn, addToast],
+    [signIn, addToast, history],
   );
 
   return (
